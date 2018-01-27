@@ -31,16 +31,16 @@
         window.AudioContext = window.AudioContext || window.webkitAudioContext;
 
         // grab an audio context
-        //audioContext = new AudioContext();
+        audioContext = new AudioContext();
 
         // Attempt to get audio input
         try {
             // monkeypatch getUserMedia
-            //            navigator.getUserMedia =
-            //                (navigator.getUserMedia ||
-            //                    navigator.webkitGetUserMedia ||
-            //                    navigator.mozGetUserMedia ||
-            //                    navigator.msGetUserMedia);
+            navigator.getUserMedia =
+                (navigator.getUserMedia ||
+                    navigator.webkitGetUserMedia ||
+                    navigator.mozGetUserMedia ||
+                    navigator.msGetUserMedia);
 
             // ask for an audio input
             navigator.getUserMedia({
