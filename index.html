@@ -13,7 +13,7 @@
 <script>
     function startup() {
         console.log("go fuq urself");
-        //var audioContext = null;
+        var audioContext = null;
         var meter = null;
         var canvasContext = null;
         var WIDTH = 500;
@@ -28,10 +28,10 @@
         canvasContext = document.getElementById("meter").getContext("2d");
 
         // monkeypatch Web Audio
-        //window.AudioContext = window.AudioContext || window.webkitAudioContext;
+        window.AudioContext = window.AudioContext || window.webkitAudioContext;
 
         // grab an audio context
-        var audioContext = new AudioContext();
+        //audioContext = new AudioContext();
 
         // Attempt to get audio input
         try {
