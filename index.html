@@ -74,10 +74,10 @@
     function onMicrophoneGranted(stream) {
         console.log("i am crey");
         // Create an AudioNode from the stream.
-        mediaStreamSource = audioContext.createMediaStreamSource(stream);
+        mediaStreamSource = Storage.ctx.createMediaStreamSource(stream);
 
         // Create a new volume meter and connect it.
-        meter = createAudioMeter(audioContext);
+        meter = createAudioMeter(Storage.ctx);
         mediaStreamSource.connect(meter);
 
         // kick off the visual updating
@@ -85,9 +85,10 @@
     }
 
     function setupStorage() {
+        console.log("take 1 action");
         //audioContext = new AudioContext();
         Storage.ctx = new AudioContext();
-        audioContext = Storage.ctx;
+        //audioContext = Storage.ctx;
         window.AudioContext = window.AudioContext || window.webkitAudioContext;
     }
 
