@@ -38,7 +38,7 @@
         // Attempt to get audio input
         try {
             // monkeypatch getUserMedia
-            navigator.getUserMedia =
+            navigator.mediaDevices.getUserMedia =
                 (navigator.getUserMedia ||
                     navigator.webkitGetUserMedia ||
                     navigator.mozGetUserMedia ||
