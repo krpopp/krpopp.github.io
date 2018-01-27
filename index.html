@@ -65,6 +65,7 @@
         var mediaStreamSource = null;
 
         function onMicrophoneGranted(stream) {
+            console.log("i am crey");
             // Create an AudioNode from the stream.
             mediaStreamSource = audioContext.createMediaStreamSource(stream);
 
