@@ -18,6 +18,7 @@
         var WIDTH = 500;
         var HEIGHT = 50;
         var rafID = null;
+
         if ("vibrate" in window.navigator) {
             window.navigator.vibrate(100);
         }
@@ -56,49 +57,49 @@
             //alert('getUserMedia threw exception :' + e);
         }
 
-    }
-
-    function onMicrophoneDenied() {
-        alert('Stream generation failed.');
-    }
-
-    var mediaStreamSource = null;
-
-    function onMicrophoneGranted(stream) {
-        // Create an AudioNode from the stream.
-        mediaStreamSource = audioContext.createMediaStreamSource(stream);
-
-        // Create a new volume meter and connect it.
-        meter = createAudioMeter(audioContext);
-        mediaStreamSource.connect(meter);
-
-        // kick off the visual updating
-        onLevelChange();
-    }
-
-    function onLevelChange(time) {
-        // clear the background
-        canvasContext.clearRect(0, 0, WIDTH, HEIGHT);
-
-        // check if we're currently clipping
-        if (meter.checkClipping()) {
-            //window.navigator.vibrate([1000, 2000, 1000]);
-            canvasContext.fillStyle = "red";
-        } else
-            canvasContext.fillStyle = "green";
-
-        console.log(meter.volume);
-        if (meter.volume >= 0.001) {
-            window.navigator.vibrate([1000, 2000, 1000]);
-            console.log("hmm");
+        function onMicrophoneDenied() {
+            alert('Stream generation failed.');
         }
 
-        // draw a bar based on the current volume
-        canvasContext.fillRect(0, 0, meter.volume * WIDTH * 1.4, HEIGHT);
+        var mediaStreamSource = null;
 
-        // set up the next visual callback
-        rafID = window.requestAnimationFrame(onLevelChange);
+        function onMicrophoneGranted(stream) {
+            // Create an AudioNode from the stream.
+            mediaStreamSource = audioContext.createMediaStreamSource(stream);
+
+            // Create a new volume meter and connect it.
+            meter = createAudioMeter(audioContext);
+            mediaStreamSource.connect(meter);
+
+            // kick off the visual updating
+            onLevelChange();
+        }
+
+        function onLevelChange(time) {
+            // clear the background
+            canvasContext.clearRect(0, 0, WIDTH, HEIGHT);
+
+            // check if we're currently clipping
+            if (meter.checkClipping()) {
+                //window.navigator.vibrate([1000, 2000, 1000]);
+                canvasContext.fillStyle = "red";
+            } else
+                canvasContext.fillStyle = "green";
+
+            console.log(meter.volume);
+            if (meter.volume >= 0.001) {
+                window.navigator.vibrate([1000, 2000, 1000]);
+                console.log("hmm");
+            }
+
+            // draw a bar based on the current volume
+            canvasContext.fillRect(0, 0, meter.volume * WIDTH * 1.4, HEIGHT);
+
+            // set up the next visual callback
+            rafID = window.requestAnimationFrame(onLevelChange);
+        }
     }
+
 
     //    window.onload = function() {
     //
