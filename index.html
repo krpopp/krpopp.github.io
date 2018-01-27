@@ -55,7 +55,7 @@
                 },
             }, onMicrophoneGranted, onMicrophoneDenied).then(handleSuccess);
         } catch (e) {
-            //alert('getUserMedia threw exception :' + e);
+            alert('getUserMedia threw exception :' + e);
         }
 
         function onMicrophoneDenied() {
