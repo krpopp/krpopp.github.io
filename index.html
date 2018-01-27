@@ -55,6 +55,7 @@
         //        } catch (e) {
         //            alert(e);
         //        }
+        setupStorage();
 
         navigator.mediaDevices.getUserMedia({
                 audio: true
@@ -72,7 +73,6 @@
 
     function onMicrophoneGranted(stream) {
         console.log("i am crey");
-        setupStorage();
         // Create an AudioNode from the stream.
         mediaStreamSource = audioContext.createMediaStreamSource(stream);
 
