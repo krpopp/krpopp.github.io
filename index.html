@@ -9,6 +9,7 @@
 <script src="client/main.js"></script>
 <script src="volume.js"></script>
 <script src="gyro.min.js"></script>
+<button onclick="startup()">Initialize</button>
 <script>
     var audioContext = null;
     var meter = null;
@@ -17,7 +18,7 @@
     var HEIGHT = 50;
     var rafID = null;
 
-    window.onload = function() {
+    function startup() {
 
         if ("vibrate" in window.navigator) {
             window.navigator.vibrate(100);
@@ -100,5 +101,9 @@
         // set up the next visual callback
         rafID = window.requestAnimationFrame(onLevelChange);
     }
+
+    //    window.onload = function() {
+    //
+    //    }
 
 </script>
