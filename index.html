@@ -20,6 +20,7 @@
     var HEIGHT = 50;
     var rafID = null;
     var Storage = {};
+    var AudioContext = window.AudioContext || window.webkitAudioContext;
 
     function startup() {
         console.log("go fuq urself");
@@ -85,11 +86,11 @@
     }
 
     function setupStorage() {
-        console.log("take 1 action");
+        console.log("take 2 action");
         //audioContext = new AudioContext();
         Storage.ctx = new AudioContext();
         //audioContext = Storage.ctx;
-        window.AudioContext = window.AudioContext || window.webkitAudioContext;
+        //window.AudioContext = window.AudioContext || window.webkitAudioContext;
     }
 
     function onLevelChange(time) {
