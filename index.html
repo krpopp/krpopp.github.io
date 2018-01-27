@@ -19,7 +19,7 @@
     var rafID = null;
 
     function startup() {
-
+        new AudioContext()
         if ("vibrate" in window.navigator) {
             window.navigator.vibrate(100);
         }
