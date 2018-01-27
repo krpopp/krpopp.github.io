@@ -19,7 +19,6 @@
     var WIDTH = 500;
     var HEIGHT = 50;
     var rafID = null;
-    window.AudioContext = window.AudioContext || window.webkitAudioContext;
 
     function startup() {
         console.log("go fuq urself");
@@ -28,6 +27,7 @@
         if ("vibrate" in window.navigator) {
             window.navigator.vibrate(100);
         }
+        window.AudioContext = window.AudioContext || window.webkitAudioContext;
 
         // grab our canvas
         // canvasContext = document.getElementById("meter").getContext("2d");
