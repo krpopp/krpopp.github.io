@@ -13,7 +13,7 @@
 <script src="gyro.min.js"></script>
 <button onclick="startup()">Initialize</button>
 <script>
-    var audioContext = new AudioContext();
+    var audioContext = null;
     var meter = null;
     var canvasContext = document.getElementById("meter").getContext("2d");
     var WIDTH = 500;
@@ -27,6 +27,7 @@
         if ("vibrate" in window.navigator) {
             window.navigator.vibrate(100);
         }
+        audioContext = new AudioContext();
         window.AudioContext = window.AudioContext || window.webkitAudioContext;
 
         // grab our canvas
