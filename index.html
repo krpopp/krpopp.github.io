@@ -11,15 +11,13 @@
 <script src="gyro.min.js"></script>
 <button onclick="startup()">Initialize</button>
 <script>
-    var audioContext = null;
-    var meter = null;
-    var canvasContext = null;
-    var WIDTH = 500;
-    var HEIGHT = 50;
-    var rafID = null;
-
     function startup() {
-        new AudioContext()
+        var audioContext = null;
+        var meter = null;
+        var canvasContext = null;
+        var WIDTH = 500;
+        var HEIGHT = 50;
+        var rafID = null;
         if ("vibrate" in window.navigator) {
             window.navigator.vibrate(100);
         }
@@ -53,7 +51,7 @@
                     },
                     "optional": []
                 },
-            }, onMicrophoneGranted, onMicrophoneDenied);
+            }, onMicrophoneGranted, onMicrophoneDenied).then(handleSuccess);
         } catch (e) {
             //alert('getUserMedia threw exception :' + e);
         }
