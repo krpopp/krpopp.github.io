@@ -110,41 +110,8 @@
             "playBlank": true,
             "updateCheck": true
     },
-        {
-            "name": "pill",
-            "sheets": 2,
-            "sound": ["swallow"],
-            "tone": "roomtone",
-            "soundType": 3,
-            "soundFrame": 20,
-            "time": "morning",
-            "keySet": ["manager.control"],
-            "pattern": 0,
-            "speed": 10,
-            "hands": 1,
-            "specialSet": true,
-            "restart": false,
-            "decrease": false,
-            "playBlank": true,
-            "updateCheck": false
-    },
-        {
-            "name": "mascara",
-            "sheets": 3,
-            "sound": ["mascara"],
-            "tone": "roomtone",
-            "soundType": 13,
-            "time": "morning",
-            "keySet": ["manager.cursors.up"],
-            "pattern": 0,
-            "speed": 2,
-            "hands": 1,
-            "specialSet": false,
-            "restart": false,
-            "decrease": true,
-            "playBlank": true,
-            "updateCheck": true
-    },
+     
+       
         {
             "name": "ending",
             "sheets": 4,
@@ -456,6 +423,39 @@
             "decrease": false,
             "playBlank": true,
             "updateCheck": true
+    }, {
+            "name": "mascara",
+            "sheets": 3,
+            "sound": ["mascara"],
+            "tone": "roomtone",
+            "soundType": 13,
+            "time": "midday",
+            "keySet": ["manager.cursors.up"],
+            "pattern": 0,
+            "speed": 2,
+            "hands": 1,
+            "specialSet": false,
+            "restart": false,
+            "decrease": true,
+            "playBlank": true,
+            "updateCheck": true
+    },   {
+            "name": "pill",
+            "sheets": 2,
+            "sound": ["swallow"],
+            "tone": "roomtone",
+            "soundType": 3,
+            "soundFrame": 20,
+            "time": "midday",
+            "keySet": ["manager.control"],
+            "pattern": 0,
+            "speed": 10,
+            "hands": 1,
+            "specialSet": true,
+            "restart": false,
+            "decrease": false,
+            "playBlank": true,
+            "updateCheck": false
     }
   ]
 }
