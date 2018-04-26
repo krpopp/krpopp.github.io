@@ -1,0 +1,142 @@
+{
+    "frames": [
+
+        {
+            "filename": "excelcursor",
+            "frame": {
+                "x": 1,
+                "y": 1451,
+                "w": 45,
+                "h": 15
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 45,
+                "h": 15
+            },
+            "sourceSize": {
+                "w": 45,
+                "h": 15
+            }
+},
+        {
+            "filename": "desktopbackground",
+            "frame": {
+                "x": 1,
+                "y": 1,
+                "w": 526,
+                "h": 288
+            },
+            "rotated": false,
+            "trimmed": true,
+            "spriteSourceSize": {
+                "x": 348,
+                "y": 0,
+                "w": 526,
+                "h": 288
+            },
+            "sourceSize": {
+                "w": 1200,
+                "h": 500
+            }
+},
+        {
+            "filename": "emailclient",
+            "frame": {
+                "x": 1,
+                "y": 291,
+                "w": 526,
+                "h": 288
+            },
+            "rotated": false,
+            "trimmed": true,
+            "spriteSourceSize": {
+                "x": 348,
+                "y": 0,
+                "w": 526,
+                "h": 288
+            },
+            "sourceSize": {
+                "w": 1200,
+                "h": 500
+            }
+},
+        {
+            "filename": "loanemail",
+            "frame": {
+                "x": 1,
+                "y": 581,
+                "w": 526,
+                "h": 288
+            },
+            "rotated": false,
+            "trimmed": true,
+            "spriteSourceSize": {
+                "x": 348,
+                "y": 0,
+                "w": 526,
+                "h": 288
+            },
+            "sourceSize": {
+                "w": 1200,
+                "h": 500
+            }
+},
+        {
+            "filename": "emailscreen",
+            "frame": {
+                "x": 1,
+                "y": 871,
+                "w": 526,
+                "h": 288
+            },
+            "rotated": false,
+            "trimmed": true,
+            "spriteSourceSize": {
+                "x": 348,
+                "y": 0,
+                "w": 526,
+                "h": 288
+            },
+            "sourceSize": {
+                "w": 1200,
+                "h": 500
+            }
+},
+        {
+            "filename": "excel",
+            "frame": {
+                "x": 1,
+                "y": 1161,
+                "w": 526,
+                "h": 288
+            },
+            "rotated": false,
+            "trimmed": true,
+            "spriteSourceSize": {
+                "x": 348,
+                "y": 0,
+                "w": 526,
+                "h": 288
+            },
+            "sourceSize": {
+                "w": 1200,
+                "h": 500
+            }
+}],
+    "meta": {
+        "app": "http://www.codeandweb.com/texturepacker",
+        "version": "1.0",
+        "image": "compmaterials.png",
+        "format": "RGBA8888",
+        "size": {
+            "w": 528,
+            "h": 1467
+        },
+        "scale": "1",
+        "smartupdate": "$TexturePacker:SmartUpdate:13599bb635f970e5e7c5d634b6c44ac4:e4bd4fa15c2e9a006e06fd384ede5544:d8d12883748d7054d708bdd1d10bcde8$"
+    }
+}
