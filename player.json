@@ -1,0 +1,142 @@
+{
+    "frames": [
+
+        {
+            "filename": "shell4",
+            "frame": {
+                "x": 44,
+                "y": 38,
+                "w": 15,
+                "h": 31
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 15,
+                "h": 31
+            },
+            "sourceSize": {
+                "w": 15,
+                "h": 31
+            }
+},
+        {
+            "filename": "shell3",
+            "frame": {
+                "x": 44,
+                "y": 1,
+                "w": 17,
+                "h": 35
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 17,
+                "h": 35
+            },
+            "sourceSize": {
+                "w": 17,
+                "h": 35
+            }
+},
+        {
+            "filename": "shell2",
+            "frame": {
+                "x": 23,
+                "y": 40,
+                "w": 19,
+                "h": 35
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 19,
+                "h": 35
+            },
+            "sourceSize": {
+                "w": 19,
+                "h": 35
+            }
+},
+        {
+            "filename": "shell1",
+            "frame": {
+                "x": 23,
+                "y": 1,
+                "w": 19,
+                "h": 37
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 19,
+                "h": 37
+            },
+            "sourceSize": {
+                "w": 19,
+                "h": 37
+            }
+},
+        {
+            "filename": "walk2",
+            "frame": {
+                "x": 1,
+                "y": 41,
+                "w": 20,
+                "h": 34
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 20,
+                "h": 34
+            },
+            "sourceSize": {
+                "w": 20,
+                "h": 34
+            }
+},
+        {
+            "filename": "walk1",
+            "frame": {
+                "x": 1,
+                "y": 1,
+                "w": 20,
+                "h": 38
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 20,
+                "h": 38
+            },
+            "sourceSize": {
+                "w": 20,
+                "h": 38
+            }
+}],
+    "meta": {
+        "app": "http://www.codeandweb.com/texturepacker",
+        "version": "1.0",
+        "image": "player.png",
+        "format": "RGBA8888",
+        "size": {
+            "w": 62,
+            "h": 76
+        },
+        "scale": "1",
+        "smartupdate": "$TexturePacker:SmartUpdate:77a7159c733cfcb7f34301dd0a33aa72:b8ab900e38ac1d3aec18836726bfd6bc:86d5339b780aedd87b35e2b7c0a7e11b$"
+    }
+}
