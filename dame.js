@@ -41,7 +41,7 @@ BasicGame.game.prototype = {
 
         //  This tells the game to resize the renderer to match the game dimensions (i.e. 100% browser width / height)
         this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-        this.scale.setUserScale(10, 10);
+        //this.scale.setUserScale(10, 10);
 //        this.game.renderer.renderSession.roundPixels = true;
 //        Phaser.Canvas.setImageRenderingCrisp(this.game.canvas);
 
@@ -50,7 +50,7 @@ BasicGame.game.prototype = {
      preload: function (){
         this.load.spritesheet('butt', 'cod.png', 258, 200);
         this.load.spritesheet('light', 'light.png', 500, 400);
-
+         
     },
     
     
@@ -79,7 +79,16 @@ BasicGame.game.prototype = {
         this.body.events.onInputOut.add(function(){
             this.body.y = this.game.world.height/1.8;        
         }, this);
-        
+        if(!this.game.device.desktop){
+            console.log("hi");
+            this.game.camera.scale.x = 2;
+            this.game.camera.scale.y = 2;
+            this.game.camera.x = this.game.world.centerX;
+            this.game.camera.y = this.game.world.centerY;
+            this.light.y = this.game.world.height/3;
+            //this.game.camera.bounds.width = window.innerWidth;
+            //this.game.camera.bounds.height = window.innerHeight;
+        }
     
     }
     
