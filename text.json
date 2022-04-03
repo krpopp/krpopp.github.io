@@ -1,0 +1,18 @@
+{
+    "dialog":{
+       "scene":[
+          {
+             "name":"$",
+             "line":"Picked up a umbrella."
+          },
+          {
+            "name":"@",
+            "line":"Go outside."
+          },
+          {
+            "name":"X",
+            "line":"The door is locked."
+          }
+       ]
+    }
+ }
