@@ -1,18 +1,18 @@
 {
-    "dialog":{
-       "scene":[
-          {
-             "name":"$",
-             "line":"Picked up a umbrella."
-          },
-          {
-            "name":"@",
-            "line":"Go outside."
-          },
-          {
-            "name":"X",
-            "line":"The door is locked."
-          }
-       ]
-    }
+    "npcs": 
+        [
+            {
+                "name": "Karina",
+                "sight": 0.1
+            },
+            {
+                "name": "Lorg",
+                "line": 0.5
+            },
+            {
+                "name": "Akshay",
+                "line": 0.7
+            }
+        ]
+    
  }
