@@ -52,6 +52,7 @@ let sketch = function (p) {
         outerDiv = p.createDiv();
         outerDiv.style('max-width', '500px');
         outerDiv.style('margin', 'auto');
+        //outerDiv.style('margin-top', '-50px');
         outerDiv.style('text-align', 'center');
         outerDiv.id('game')
 
@@ -81,6 +82,9 @@ let sketch = function (p) {
         sexButton.mousePressed(() => {
             p.havingSex();
         });
+        sexButton.mouseReleased(() => {
+            p.reverseChange();
+        })
         sexButton.hide();
         
         var btnBrk = p.createSpan('<br><br>');
@@ -192,6 +196,11 @@ let sketch = function (p) {
             athens.erections.changeAmt = -1;
             sparta.erections.changeAmt = -1;
             timeSinceSex = 0;
+        }
+    
+        p.reverseChange = function () {
+            athens.erections.changeAmt = 1;
+            sparta.erections.changeAmt = 1;
         }
          
         p.notHavingSex = function () {
