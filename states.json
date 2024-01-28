@@ -11,10 +11,11 @@
         "maxIncreaseRate": 7000,
         "minAmount": 1000,
         "priority": 0,
-        "passiveIncrease": true
+        "passiveIncrease": true,
+        "erectionEffect": false
     },
     "gold": {
-        "count": 2500,
+        "count": 1500,
         "cost": -1,
         "currency": "non",
         "baseIncrease": 1,
@@ -22,7 +23,8 @@
         "maxIncreaseRate": 10000,
         "minAmount": 1000,
         "priority": 0,
-        "passiveIncrease": true
+        "passiveIncrease": true,
+        "erectionEffect": true
     },
     "food": {
         "count": 5000,
@@ -33,7 +35,8 @@
         "maxIncreaseRate": 10000,
         "minAmount": 1000,
         "priority": 2,
-        "passiveIncrease": true
+        "passiveIncrease": true,
+        "erectionEffect": false
     },
     "iron" : {
         "count": 100,
@@ -44,7 +47,8 @@
         "maxIncreaseRate": 8000,
         "minAmount": 1000,
         "priority": 4,
-        "passiveIncrease": true
+        "passiveIncrease": true,
+        "erectionEffect": true
     },
     "wood" : {
         "count": 200,
@@ -55,7 +59,8 @@
         "maxIncreaseRate": 1000,
         "minAmount": 1000,
         "priority": 5,
-        "passiveIncrease": true
+        "passiveIncrease": true,
+        "erectionEffect": false
     },
     "weapons": {
         "count": 2800,
@@ -66,7 +71,8 @@
         "maxIncreaseRate": 10000,
         "minAmount": 1000,
         "priority": 1,
-        "passiveIncrease": false
+        "passiveIncrease": false,
+        "erectionEffect": true
     },
     "ships" : {
         "count": 50,
@@ -77,7 +83,20 @@
         "maxIncreaseRate": 5000,
         "minAmount": 1000,
         "priority": 3,
-        "passiveIncrease": false
+        "passiveIncrease": false,
+        "erectionEffect": true
+    },
+    "erections" : {
+        "count": 10,
+        "cost": -1,
+        "currency": "non",
+        "baseIncrease": 1,
+        "minIncreaseRate": 1000,
+        "maxIncreaseRate": 2000,
+        "minAmount": 0,
+        "priority": -1,
+        "passiveIncrease": true,
+        "erectionEffect": false
     },
     "landskill": 9,
     "waterSkill": 7
@@ -93,10 +112,11 @@
         "maxIncreaseRate": 9000,
         "minAmount": 1000,
         "priority": 0,
-        "passiveIncrease": true
+        "passiveIncrease": true,
+        "erectionEffect": false
     },
     "gold": {
-        "count": 3000,
+        "count": 2000,
         "cost": -1,
         "currency": "non",
         "baseIncrease": 1,
@@ -104,7 +124,8 @@
         "maxIncreaseRate": 10000,
         "minAmount": 1000,
         "priority": 0,
-        "passiveIncrease": true
+        "passiveIncrease": true,
+        "erectionEffect": true
     },
     "food": {
         "count": 5000,
@@ -115,7 +136,8 @@
         "maxIncreaseRate": 10000,
         "minAmount": 1000,
         "priority": 2,
-        "passiveIncrease": true
+        "passiveIncrease": true,
+        "erectionEffect": false
     },
     "iron" : {
         "count": 100,
@@ -126,7 +148,8 @@
         "maxIncreaseRate": 8000,
         "minAmount": 1000,
         "priority": 4,
-        "passiveIncrease": true
+        "passiveIncrease": true,
+        "erectionEffect": true
     },
     "wood" : {
         "count": 200,
@@ -137,7 +160,8 @@
         "maxIncreaseRate": 1000,
         "minAmount": 1000,
         "priority": 5,
-        "passiveIncrease": true
+        "passiveIncrease": true,
+        "erectionEffect": false
     },
     "weapons": {
         "count": 2800,
@@ -148,7 +172,8 @@
         "maxIncreaseRate": 10000,
         "minAmount": 1000,
         "priority": 1,
-        "passiveIncrease": false
+        "passiveIncrease": false,
+        "erectionEffect": true
     },
     "ships" : {
         "count": 80,
@@ -159,7 +184,20 @@
         "maxIncreaseRate": 4000,
         "minAmount": 1000,
         "priority": 3,
-        "passiveIncrease": false
+        "passiveIncrease": false,
+        "erectionEffect": true
+    },
+    "erections" : {
+        "count": 10,
+        "cost": -1,
+        "currency": "non",
+        "baseIncrease": 1,
+        "minIncreaseRate": 1000,
+        "maxIncreaseRate": 2000,
+        "minAmount": 0,
+        "priority": -1,
+        "passiveIncrease": true,
+        "erectionEffect": false
     },
     "landskill": 9,
     "waterSkill": 7

@@ -3,6 +3,8 @@ let sketch = function (p) {
     var horniness = 0;
     var hornyLabel;
 
+    var womenLabel;
+
     var sexButton;
 
     var outerDiv;
@@ -67,7 +69,10 @@ let sketch = function (p) {
         bottomDiv.id('bottomest');
         bottomDiv.parent('game');
 
-        hornyLabel = p.createSpan('Horniess: ' + horniness + '<br><br>');
+        womenLabel = p.createSpan('Women<br><br>');
+        womenLabel.parent('toppest');
+
+        hornyLabel = p.createSpan('Restlessness: ' + horniness + '<br><br>');
         hornyLabel.parent('toppest')
         hornyLabel.hide();
 
@@ -94,20 +99,21 @@ let sketch = function (p) {
         })
         noSexButton.hide();
 
-        sparta = new p.State(0, "Peloponnesian League", "0px");
-        athens = new p.State(1, "Delian League", "50px");
+        sparta = new p.State(0, "Peloponnesian League", "50px");
+        athens = new p.State(1, "Delian League", "10px");
         groups = [athens, sparta];
     };
 
     p.draw = function () {
-        athens.simulatePassive();
-        sparta.simulatePassive();
-
         var time = p.millis();
-        if (time > nextBattleTimer) {
-            p.battle();
-            nextBattleTime = p.random(battleTimeMin, battleTimeMax);
-            nextBattleTimer = time + nextBattleTime;
+        if (phase < 4) {
+            athens.simulatePassive();
+            sparta.simulatePassive();
+            if (time > nextBattleTimer) {
+                p.battle();
+                nextBattleTime = p.random(battleTimeMin, battleTimeMax);
+                nextBattleTimer = time + nextBattleTime;
+            }
         }
 
         switch (phase) {
@@ -116,80 +122,91 @@ let sketch = function (p) {
                     p.increasePhase();
                 }
                 break;
-            // case 1:
-            //     if (athens.erections.amount > 10 || sparta.erections.amount > 10) {
-            //         p.increasePhase();
-            //     }
-            //     break;
-            // case 2:
-            //     if (p.millis() > hornyInc)
-            //     {
-            //         p.increaseHorniness();
-            //         hornyInc = p.millis() + timer;
-            //     }
-            //     if (horniness > 15) 
-            //     {
-            //         p.increasePhase();    
-            //     }
-            //     break;
-            // case 3:
-            //     if (p.millis() > hornyInc)
-            //     {
-            //         p.havingSex();
-            //         hornyInc = p.millis() + timer;
-            //     }
-            //     break;
+            case 1:
+                if (p.millis() > hornyInc)
+                {
+                    p.increaseHorniness();
+                    hornyInc = p.millis() + timer;
+                }
+                if (athens.erections.amount > 10 || sparta.erections.amount > 10) {
+                    p.increasePhase();
+                }
+                break;
+            case 2:
+                if (p.millis() > hornyInc)
+                {
+                    p.increaseHorniness();
+                    hornyInc = p.millis() + timer;
+                }
+                if (horniness > 20) 
+                {
+                    p.increasePhase();    
+                }
+                break;
+            case 3:
+                if (p.millis() > hornyInc)
+                {
+                    p.havingSex();
+                    hornyInc = p.millis() + timer;
+                }
+                if (athens.gold.amount == 0 && sparta.gold.amount == 0) {
+                    p.increasePhase();
+                }
+                break;
         }
-
     }
         
         p.increasePhase = function(){
             phase++;
             if (phase == 1) {
-                hornyLabel.show();
                 sexButton.show();
                 sexButton.style('display', 'inline')
             } if (phase == 2) {
                 athens.erections.unhide();
                 sparta.erections.unhide();
             } if (phase == 3) {
+                hornyLabel.show();
                 sexButton.hide();
                 noSexButton.show();
                 noSexButton.style('display', 'inline');
+            } if (phase == 4) {
+                noSexButton.hide();
+                title.html("<h1>You ended the Peloponessian War!</h1> <br><br>");
             }
         }
     
         p.increaseHorniness = function () {
             horniness += 1;
-            hornyLabel.html('Horniess: ' + horniness + '<br><br>');
+            hornyLabel.html('Restlessness: ' + horniness + '<br><br>');
         }
 
         p.decreaseHorniness = function () {
             if (horniness > 0) {
                 horniness -= 1;
             }
-            hornyLabel.html('Horniess: ' + horniness + '<br><br>');
+            hornyLabel.html('Restlessness: ' + horniness + '<br><br>');
         }
 
         p.havingSex = function () {
             p.decreaseHorniness();
-            if (sexInt > 1) {
-                p.shuffle(groups, true);
-                sexInt = 0;
-            }
-            groups[sexInt].erections.tarAmount--;
-            sexInt++;
+            athens.erections.changeAmt = -1;
+            sparta.erections.changeAmt = -1;
             timeSinceSex = 0;
         }
          
         p.notHavingSex = function () {
             p.increaseHorniness();
-            if (athens.erections.amount > 0) {
-                athens.erections.tarAmount+=1;
+            if (athens.erections.amount == 0) {
+                athens.erections.amount = 1;
+                athens.erections.tarAmount = 2;
             }
-            if (sparta.erections.amount > 0) {
-                sparta.erections.tarAmount+=1;
-            }  
+            if (sparta.erections.amount == 0) {
+                sparta.erections.amount == 1;
+                sparta.erections.tarAmount = 2;
+            }
+            athens.erections.changeAmt = 1;
+            sparta.erections.changeAmt = 1;
+            hornyInc = p.millis() + timer;
         }
 
     p.battle = function () {
@@ -209,8 +226,6 @@ let sketch = function (p) {
             defender = athens
         }
         
-        var result = aggressor.score(setting) - defender.score(setting);
-        console.log(result);
         if (aggressor.score(setting) > defender.score(setting)) {
             var diff = (1 - (defender.score(setting) / (aggressor.score(setting) + defender.score(setting))));
             aggressor.winBattle(setting, diff);
@@ -257,6 +272,8 @@ let sketch = function (p) {
             this.canGenerate = _data.passiveIncrease;
             this.needed = false;
 
+            this.erectionEffected = _data.erectionEffect;
+
             //this.erectionFactor = _eFact;
            // this.erectionLimit = _eLimit;
             this.tooManyErrections = false;
@@ -275,27 +292,31 @@ let sketch = function (p) {
             this.title.parent(this.parentDiv);
         }
 
-        passive() {
+        passive(_erectionCount) {
             var time = p.millis();
             if (time > this.timer && this.canGenerate) {
-                this.tarAmount += this.changeAmt;
-                if (this.tooManyErrections) {
-                    this.tarAmount += this.erectionFactor;
+                if (_erectionCount > 10 &&  this.erectionEffected) {
+                    this.tarAmount -= (this.changeAmt * (_erectionCount * 2))
+                } else {
+                    this.tarAmount += this.changeAmt;
                 }
                 this.rate = p.random(this.rateMin, this.rateMax);
                 this.timer = time + this.rate;
                 if (this.amount < 0) {
                     this.amount = 0;
                 }
+                if (this.tarAmount < 0) {
+                    this.tarAmount = 0;
+                }
             }
             if (this.amount > this.tarAmount)
             {
+                if (this.name == "Erections") {
+                    console.log("why");
+                }
                 this.g = 0;
                 this.r = p.abs(this.amount - this.tarAmount) * 20;
                 var addamnt = 1;
-                if (this.name == 'Erections') {
-                    addamnt = 0.5
-                }
                 this.amount -= addamnt;
                 if (this.amount < 0) {
                     this.amount = 0;
@@ -308,11 +329,8 @@ let sketch = function (p) {
                 if (addamt < 1) {
                     addamt = 1
                 }
-                if (this.name == 'Erections') {
-                    addamnt = 0.5
-                }
                 this.amount += addamt;
-            }
+            } 
             this.updateHTML();
         }
 
@@ -442,17 +460,18 @@ let sketch = function (p) {
             this.iron = new p.Resource("Iron", this.jData.iron, this.div, this.gold);
             this.wood = new p.Resource("Wood", this.jData.wood, this.div, this.gold);
             this.ships = new p.Resource("Vessels", this.jData.ships, this.div, this.wood);
-            this.weapons = new p.Resource("Weapons", this.jData.weapons, this.div, this.iron);
+            this.weapons = new p.Resource("Swords", this.jData.weapons, this.div, this.iron);
+            this.erections = new p.Resource("Erections", this.jData.erections, this.div, "non");
             
 
-            this.debugWins = p.createSpan("wins: " + this.wins);
-            this.debugWins.parent(this.div);
-            this.debugLoses = p.createSpan("loses: " + this.loses);
-            this.debugLoses.parent(this.div);
-            this.debugWindfalls = p.createSpan("windfalls: " + this.windFalls);
-            this.debugWindfalls.parent(this.div);
+            // this.debugWins = p.createSpan("wins: " + this.wins);
+            // this.debugWins.parent(this.div);
+            // this.debugLoses = p.createSpan("loses: " + this.loses);
+            // this.debugLoses.parent(this.div);
+            // this.debugWindfalls = p.createSpan("windfalls: " + this.windFalls);
+            // this.debugWindfalls.parent(this.div);
 
-            this.allResources = [this.bodies, this.food, this.gold, this.iron, this.wood, this.ships, this.weapons];
+            this.allResources = [this.bodies, this.food, this.gold, this.iron, this.wood, this.ships, this.weapons, this.erections];
             
         }
 
@@ -460,7 +479,7 @@ let sketch = function (p) {
             var time = p.millis();
             for (var i = 0; i < this.allResources.length; i++)
             {
-                this.allResources[i].passive();
+                this.allResources[i].passive(this.erections.amount);
                 // if (this.allResources[i].erectionLimit < this.erections.amount) {
                 //     this.allResources[i].erectionEffect();
                 // } else {
@@ -480,13 +499,13 @@ let sketch = function (p) {
                 this.waitingForWindfall = true;
             }
 
-            if (this.waitingForWindfall && time > this.windFallTimer) {
+            if (this.waitingForWindfall && time > this.windFallTimer && this.erections.amount < 15) {
                 this.windFall();
                 this.waitingForWindfall = false;
             }
-            this.debugWins.html("wins: " + this.wins);
-            this.debugLoses.html("loses: " + this.loses);
-            this.debugWindfalls.html("windfalls: " + this.windFalls);
+            // this.debugWins.html("wins: " + this.wins);
+            // this.debugLoses.html("loses: " + this.loses);
+            // this.debugWindfalls.html("windfalls: " + this.windFalls);
         }
 
         buyPhase() {
@@ -577,7 +596,7 @@ let sketch = function (p) {
         }
 
         windFall() {
-            for (var i = 0; i < this.allResources.length ; i++)
+            for (var i = 0; i < this.allResources.length -1 ; i++)
             {
                 if (this.allResources[i].tarAmount <= 0) {
                     this.allResources[i].tarAmount = 0;
