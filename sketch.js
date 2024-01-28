@@ -125,7 +125,7 @@ let sketch = function (p) {
         athens = new p.State(1, "Delian League", "10px");
         groups = [athens, sparta];
 
-        var credit = p.createSpan("<a href='kpopp.io'>made by karina popp</a>");
+        var credit = p.createA('https://kpopp.io/', 'made by karina popp');
         credit.style('bottom', '0');
         credit.style('position', 'fixed');
         credit.style('color', 'white');
