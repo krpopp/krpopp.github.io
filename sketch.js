@@ -82,7 +82,13 @@ let sketch = function (p) {
         sexButton.mousePressed(() => {
             p.havingSex();
         });
+        sexButton.touchStarted(() => {
+            p.havingSex();
+        });
         sexButton.mouseReleased(() => {
+            p.reverseChange();
+        })
+        sexButton.touchEnded(() => {
             p.reverseChange();
         })
         sexButton.hide();
