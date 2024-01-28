@@ -107,6 +107,13 @@ let sketch = function (p) {
             pressedNoSex = true;
             p.notHavingSex();
         })
+        noSexButton.touchStarted(() => { 
+            pressedNoSex = true;
+            p.notHavingSex();
+        })
+        noSexButton.touchEnded(() => {
+            p.havingSex();
+        })
         noSexButton.hide();
 
         sparta = new p.State(0, "Peloponnesian League", "50px");
