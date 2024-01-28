@@ -55,7 +55,10 @@ let sketch = function (p) {
         //outerDiv.style('margin-top', '-50px');
         outerDiv.style('text-align', 'center');
         outerDiv.id('game')
-
+        if (window.innerWidth < 480) {
+            var warning = p.createSpan("<u>Hey this game is difficult to play on mobile, just FYI</u>")
+            warning.parent('game');
+        }
         title = p.createSpan('<h1>End the Peloponnesian War.</h1> <br><br>');
         title.parent('game')
 
@@ -97,12 +100,14 @@ let sketch = function (p) {
         btnBrk.parent('toppest');
 
         testShake = p.createDiv();
-        testShake.addClass('shake-crazy shake-freeze');
+        if (window.innerWidth > 480) {
+            testShake.addClass('shake-crazy shake-freeze');
+        }
         testShake.parent('toppest')
         testShake.id("test")
 
         noSexButton = p.createButton("DO NOT HAVE SEX");
-        //noSexButton.parent('test');
+        noSexButton.parent('test');
         noSexButton.mousePressed(() => { 
             pressedNoSex = true;
             p.notHavingSex();
@@ -119,6 +124,11 @@ let sketch = function (p) {
         sparta = new p.State(0, "Peloponnesian League", "50px");
         athens = new p.State(1, "Delian League", "10px");
         groups = [athens, sparta];
+
+        var credit = p.createSpan("<a href='kpopp.io'>made by karina popp</a>");
+        credit.style('bottom', '0');
+        credit.style('position', 'fixed');
+        credit.style('color', 'white');
     };
 
     p.draw = function () {
