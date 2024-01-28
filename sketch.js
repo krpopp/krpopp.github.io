@@ -102,7 +102,7 @@ let sketch = function (p) {
         testShake.id("test")
 
         noSexButton = p.createButton("DO NOT HAVE SEX");
-        noSexButton.parent('test');
+        //noSexButton.parent('test');
         noSexButton.mousePressed(() => { 
             pressedNoSex = true;
             p.notHavingSex();
