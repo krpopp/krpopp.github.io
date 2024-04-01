@@ -5,13 +5,19 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="viewport" content="user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1,width=device-width">
-	<title>Lysistrata</title>
+    <title>under my skin</title>
     <style>
         body {
-			color: #fff;
-			background: #000;
-			display: block;
+            color: #fff;
+            background: #000;
+            margin: 0;
+            display: flex;
+
+            /* This centers our sketch horizontally. */
+            justify-content: center;
+            overflow: hidden;
         }
+
         main {
             height: 20px;
         }
@@ -19,13 +25,12 @@
     <script src="p5.min.js"></script>
     <script src="p5.sound.min.js"></script>
     <script src="sketch.js"></script>
-	<link rel="stylesheet" type="text/css" href="csshake.min.css">
 </head>
 
 <body>
     <script>
-		let myp5 = new p5(sketch, 'p5sketch');
-	</script>
+        let myp5 = new p5(sketch, 'p5sketch');
+    </script>
 </body>
 
 </html>
