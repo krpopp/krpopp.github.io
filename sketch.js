@@ -3,302 +3,381 @@ let sketch = function (p) {
     var winWidth;
     var winHeight;
 
-    var patch;
+    var objectSprites = [];
+    var objectNames = [
+        'slide',
+        'overripe tomato',
+        'dirty ashtray',
+        'packet of tulip seeds',
+        'empty box',
+        'one dozen eggs',
+        'drop of a water',
+        'bowl of plastic fruit',
+        'the brooklyn bridge',
+        'the mona lisa',
+        'the letter q',
+        'the sun',
+        'flip phone',
+        'teddy bear',
+        'one old shoe',
+        'CRT television',
+        'matzo ball soup',
+        'diamond ring',
+        'squeaky chair',
+        'broken tricycle',
+        'fax machine',
+        'heart shaped locket',
+        'lost wallet',
+        'bottle of water',
+        'unicycle',
+        'moustache',
+        'one chop stick',
+        'ikea lamp',
+        'stop light'
+    ]
 
-    //var cellSprites = []
-    //var dot;
-    var bgHoles = [];
-    var holes = [];
+    var allInputs = [
+        'space bar + adjacent keys',
+        'mouse movement (but no buttons)',
+        'arrow keys (but CANNOT be more movement or direction)',
+        'every letter key',
+        'no input',
+        'the mouse (but held upside down)',
+        'a single column of keys on the keyboard',
+        'SHIFT, T, WASD',
+        'two arrow keys',
+        'the mouse button (but not using the finger)',
+        'mouse scroll wheel',
+        'number keys',
+        'three nonadjacent keys',
+        'four keys (but NOT WASD or arrows)',
+        'a microphone',
+        'one button',
+        'plus/minus keys',
+        'hold down one button and do not let go',
+        'three arrow keys',
+        'a single row of keys on the keyboard'
+    ]
 
-    var skin;
+    var studentNames = [
+        "chase",
+        "mia",
+        "lukas",
+        "dade",
+        "crisen",
+        "derek",
+        "amber",
+        "hari",
+        "noel",
+        "zoey",
+        'jiahe',
+        'sydney',
+        'ruari',
+        'william',
+        'victor',
+        'harper',
+        'luis'
+    ];
 
-    var bgHoleSize = [];
-    var holeSize = [];
+    var allObjects = [];
 
-    var resize = [.5, .6, .7, 1]
+    var inputBtns;
+    var objBtns;
+
+    var greenBtn;
+    var blueBtn;
+    var orangeBtn;
+    var pinkBtn;
+
+    var inputButton;
+    var objButton;
+
+    var inputIndex = 0;
+    var objIndex = 0;
+
+    var font;
+
+    var currentObjImg;
+    var currentObjText;
+
+    var currentInputText;
+
+    var currentStudentText;
+
+    var studentIndex = 0;
+
+    var assignedStudents = [];
+    var rollTimer = 0;
+    var rollTimerReset = 5;
+
+    var rollImg = null;
+    var rolling = false;
+
+    var rollText = null;
+
+    var clickSound;
+    var resultSound = [];
+
+    var resultIndex = 0;
 
     p.preload = function () {
         winWidth = window.innerWidth;
         winHeight = window.innerHeight;
-        // for(var i = 0; i < 7; i++) {
-        //     cellSprites[i] = p.loadImage("cell" + i + ".png");
-        // }
-        for (var i = 0; i < 11; i++) {
-            var num = i + 1;
-            bgHoles[i] = p.loadImage("bg" + num + ".png");
-            holes[i] = p.loadImage("hole" + num + ".png");
+        for(var i = 0; i < objectNames.length; i++) {
+            objectSprites[i] = p.loadImage('allobjects/object' + i + '.png');
         }
-        skin = p.loadImage("skin.png");
+        inputBtns = p.loadImage('inputbtns.png');
+        objBtns = p.loadImage('objbtns.png');
+        font = p.loadFont('Daydream.ttf');
+        clickSound = p.loadSound('select_001.ogg');
+        for (var i = 0; i < 2; i++) {
+            resultSound[i] = p.loadSound('result-' + i + '.ogg');
+        }
     }
 
     p.setup = function () {
         p.createCanvas(winWidth, winHeight);
-        p.imageMode(p.CENTER);
-        for (var i = 0; i < bgHoles.length; i++) {
-     
-            bgHoleSize[i] = p.createVector(bgHoles[i].width, bgHoles[i].height);
-            holeSize[i] = p.createVector(holes[i].width, holes[i].height);
+        for(var i = 0; i < objectNames.length; i++) {
+            allObjects[i] = new p.ObjObj(objectSprites[i], objectNames[i]);
         }
-        patch = new p.Patch();
-        for (var i = 0; i < 100; i++) {
-            p.makeHole();
-            // var rnd = p.round(p.random(0, resize.length));
-            // var newSize = resize[rnd];
-            // var sprite = i % 11;
-            // var cell = new p.Cell(p.width/2, p.height/2, sprite, holeSize[sprite].x * newSize, holeSize[sprite].y * newSize, bgHoleSize[sprite].x * newSize, bgHoleSize[sprite].y * newSize);
-            // patch.addCell(cell);
-        }
+        p.shuffle(allObjects, true);
 
+        p.shuffle(allInputs, true);
+
+        greenBtn = inputBtns.get(0, 0, 500, 200);
+        blueBtn = inputBtns.get(0, 200, 500, 400);
+        orangeBtn = objBtns.get(0, 0, 500, 200);
+        pinkBtn = objBtns.get(0, 200, 500, 400);
+        
+        currentStudentText = studentNames[studentIndex];
+        
+        p.textFont(font);
+
+        objButton = new p.ButtonObj(winWidth/4, winHeight * 0.1 + 700, orangeBtn, pinkBtn, "generate object");
+        inputButton = new p.ButtonObj(winWidth * 0.75, winHeight * 0.1 + 700, greenBtn, blueBtn, "generate inputs");
+
+        objButton.letMake = true;
     }
 
     p.draw = function () {
-        p.image(skin, p.width / 2, p.height / 2);
-        patch.run();
-    }
+        p.background(175, 148, 255);
+        objButton.update();
+        objButton.draw();
 
-    p.makeHole = function () {
-        // var rnd = p.round(p.random(0, resize.length));
-        // var newSize = resize[rnd];
-        // var sprite = i % 11;
-        var rndSize = p.round(p.random(0, 3));
-        var newSize = resize[rndSize];
-        var sprite = p.round(p.random(0, holeSize.length-1));
-        console.log(sprite);
-        var cell = new p.Cell(p.width/2, p.height/2, sprite, holeSize[sprite].x * newSize, holeSize[sprite].y * newSize, bgHoleSize[sprite].x * newSize, bgHoleSize[sprite].y * newSize);
-        patch.addCell(cell);
-    }
+        inputButton.update();
+        inputButton.draw();
 
-    p.Patch = class {
-        constructor() {
-            this.all = [];
-        }
+        p.textAlign(p.CENTER)
 
-        addCell(cell) {
-            this.all.push(cell);
-        }
-
-        run() {
-            for(var i = 0; i < this.all.length; i++) {
-                this.all[i].run(this.all);
+        if (currentObjImg == null && rolling) {
+            p.rollResults(allObjects, objIndex);
+            if (rollImg != null) {
+                p.image(rollImg, winWidth / 4 - 250, winHeight * 0.1);
+            }
+            
+        } else if (currentObjImg != null && currentInputText == null && rolling) {
+            p.rollResults(allInputs, inputIndex);
+            if (rollText != null) {
+                p.fill('white');
+                p.text(rollText, inputButton.x, winHeight * 0.1 + 250, 500, 500)
             }
         }
-
+        if (currentObjImg != null) {
+            p.image(currentObjImg, winWidth/4 - 250, winHeight * 0.1);
+            p.fill('black');
+            p.text(currentObjText, winWidth/4, winHeight * 0.1 + 550);
+        }
+        if (currentInputText != null) {
+            p.fill('black');
+            p.text(currentInputText, inputButton.x, winHeight * 0.1 + 250, 500, 500);
+        }
+        p.textAlign(p.CENTER)
+        p.fill('white');
+        for (var i = studentIndex; i < studentNames.length; i++) {
+            if (studentNames[i] === currentStudentText) {
+                p.textSize(12);
+                p.fill('white');
+            } else {
+                p.textSize(8);
+                p.fill('black');
+            }
+            p.text(studentNames[i], winWidth / 2 - 100, 10 + (i * 60), 200, 60);
+        }
+        p.textSize(8);
+        p.fill('black');
+        for (var i = 0; i < assignedStudents.length; i++){
+            p.text(assignedStudents[i].name + '\n' + assignedStudents[i].obj + '\n' + assignedStudents[i].input,
+                winWidth / 2 - 100, 10 + (i * 60),
+                200,
+                60);
+        }
     }
 
-    p.Cell = class {
-        constructor(_x, _y, _i, _bgW, _bgH, _hW, _hH) {
-            this.accel = p.createVector(0,0);
-            this.vel = p.createVector(p.random(-1,1), p.random(-1, 1));
-            this.pos = p.createVector(_x, _y);
-            //this.r = 40;
-            this.r = _hW + 5;
-            this.maxSpeed = .5;
-            this.maxForce = 0.05;
-            var rnd = p.round(p.random(0, 6));
-            //console.log(rnd);
-            //this.sprite = cellSprites[rnd];
-            //this.sprite = dot;
-            this.bgSprite = bgHoles[_i];
-            this.sprite = holes[_i];
-            this.frame = 0;
-            this.animCount = 0;
-            this.bgW = _bgW;
-            this.bgH = _bgH;
-            this.hW = _hW;
-            this.hH = _hH;
+    p.mouseClicked = function () {
+        if (objButton.state == 1) {
+            rolling = true;
+            objButton.letMake = false;
+        }
+        if (inputButton.state == 1) {
+            rolling = true;
+            inputButton.letMake = false;
+        }
+    }
+    
+    p.keyPressed = function () {
+        if (p.key == 'n' && currentInputText != null) {
+            p.storeAssignments();
+            objButton.letMake = true;
+        }
+    }
+
+    p.rollResults = function (_array, _index){
+        if (currentObjImg == null && rollTimer <= 0) {
+            clickSound.play();
+            var randImg = p.int(p.random(_index, _array.length - 1));
+            rollImg = _array[randImg].pic;
+            rollTimer = rollTimerReset;
+            rollTimerReset += 1;
+        } else if (currentObjImg != null && currentInputText == null && rollTimer <= 0) {
+            clickSound.play();
+            var randText = p.int(p.random(_index, _array.length - 1));
+            rollText = _array[randText];
+            rollTimer = rollTimerReset;
+            rollTimerReset += 1;
+        }
+        rollTimer -= 3;
+        if (rollTimerReset >= 40) {
+            if (currentObjImg == null) {
+                objButton.generateObjResult(allObjects, objIndex);
+                objIndex += 1;
+                inputButton.letMake = true;
+            } else if (currentObjImg != null && currentInputText == null) {
+                inputButton.generateInputResult(allInputs, inputIndex);
+                inputIndex += 1;
+            }
+            rolling = false;
+            rollTimer = 0;
+            rollTimerReset = 5;
+            rollImg = null;
+        }
+    }
+
+    p.storeAssignments = function () {
+        assignedStudents[studentIndex] = new p.AssignedPrompt(200, winHeight * 0.9, currentStudentText, currentObjText, currentObjImg, currentInputText);
+        studentIndex += 1;
+        currentStudentText = studentNames[studentIndex];
+        currentInputText = null;
+        currentObjImg = null;
+        currentObjText = null;
+    }
+
+    p.ObjObj = class {
+        constructor(_pic, _name) {
+            this.pic = _pic;
+            this.name = _name;
+        }
+    }
+    
+    p.ButtonObj = class {
+        constructor(_x, _y, _upImg, _downImg, _label) {
+            this.x = _x - 250;
+            this.y = _y - 100;
+
+            this.idle = _upImg;
+            this.hover = _downImg;
+
+            this.state = 0;
+
+            this.label = _label;
+
+            this.letMake = false;
         }
 
-        run(array) {
-            this.flock(array);
-            this.update();
-            this.borders();
-            this.render();
-        }
-
-        applyForce(force) {
-            this.accel.add(force);
-        }
-
-        flock(array) {
-            var sep = this.separate(array);
-            var ali = this.align(array);
-            var coh = this.cohesion(array);
-            //var avoid = this.avoidOther(array);
-            sep.mult(10.5);
-            ali.mult(1.0);
-            coh.mult(1.0);
-            //avoid.mult(1.0);
-            this.applyForce(sep);
-            this.applyForce(ali);
-            this.applyForce(coh);
-            //this.applyForce(avoid);
+        draw() {
+            p.textAlign(p.CENTER)
+            if (this.state == 0) {
+                p.image(this.idle, this.x, this.y);
+                p.fill('black');
+                p.textSize(28);
+                p.text(this.label, this.x + 250, this.y + 95);
+                p.fill('white');
+                p.textSize(28);
+                p.text(this.label, this.x + 250, this.y + 100);
+            } else if (this.state == 1) {
+                p.image(this.hover, this.x, this.y);
+                p.fill('white');
+                p.textSize(28);
+                p.text(this.label, this.x + 250, this.y + 95);
+                p.fill('black');
+                p.textSize(28);
+                p.text(this.label, this.x + 250, this.y + 100);
+            } else if (this.state == 2) {
+                p.tint(43, 43, 43);
+                p.image(this.idle, this.x, this.y);
+                p.fill('black');
+                p.textSize(28);
+                p.text(this.label, this.x + 250, this.y + 95);
+                p.fill(145, 145, 145);
+                p.textSize(28);
+                p.text(this.label, this.x + 250, this.y + 100);
+                p.tint('white');
+            }
         }
 
         update() {
-            this.vel.add(this.accel);
-            this.vel.limit(this.maxSpeed);
-            this.pos.add(this.vel);
-            this.accel.mult(0);
-            this.avoidMouse();
-        }
-
-        seek(target) {
-            var desired = p5.Vector.sub(target, this.pos);
-            desired.normalize();
-            desired.mult(this.maxSpeed);
-            var steer = p5.Vector.sub(desired, this.vel);
-            steer.limit(this.maxForce);
-            return steer;
-        }
-
-        animate() {
-            this.animCount+=1;
-            if(this.animCount > 5) {
-                this.frame+=1;
-                if(this.frame == 7) {
-                    this.frame = 0;
+            if (this.letMake) {
+                if (p.mouseX > this.x && p.mouseX < this.x + 500 && p.mouseY > this.y && p.mouseY < this.y + 200) {
+                    this.state = 1;
+                } else {
+                    this.state = 0;
                 }
-                this.sprite = cellSprites[this.frame];
-                this.animCount = 0;
-            }
-        }
-
-        render() {
-           // var theta = this.vel.heading() + p.radians(90);
-            //this.animate();
-            
-            // p.fill(232, 202, 176);
-            // p.stroke(181, 159, 148);
-            // p.ellipse(this.pos.x, this.pos.y, this.r);
-           // p.push();
-            //p.translate(this.pos.x, this.pos.y);
-            //p.rotate(theta);
-            
-           
-            
-            p.image(this.sprite, this.pos.x, this.pos.y, this.bgW, this.bgH);
-            p.image(this.bgSprite, this.pos.x, this.pos.y, this.hW, this.hH);
-            
-            // p.beginShape();
-            // p.vertex(0, -this.r * 2);
-            // p.vertex(-this.r, this.r * 2);
-            // p.vertex(this.r, this.r * 2);
-            // p.endShape(p.CLOSE);
-            //p.pop();
-        }
-
-        borders() {
-            if(this.pos.x < -this.r) {
-                //this.vel.x *= -1;
-                this.pos.x = p.width + this.r;
-            }
-            if(this.pos.y < -this.r) {
-                //this.vel.y *= -1;
-                this.pos.y = p.height + this.r;
-            }
-            if(this.pos.x > p.width + this.r) {
-                //this.vel.x *= -1;
-                this.pos.x = -this.r;
-            }
-            if(this.pos.y > p.height + this.r) {
-                //this.vel.y *= -1;
-                this.pos.y = -this.r;
-            }
-        }
-
-        separate(array) {
-            var sep = 38;
-            var steer = p.createVector(0,0);
-            var count = 0;
-            for(var i = 0; i < array.length; i++) {
-                var d = p5.Vector.dist(this.pos, array[i].pos);
-                if((d > 0) && (d < sep)) {
-                    var diff = p5.Vector.sub(this.pos, array[i].pos);
-                    diff.normalize();
-                    diff.div(d);
-                    steer.add(diff);
-                    count++;
-                }
-            }
-            if(count > 0) {
-                steer.div(count);
-            }
-
-            if(steer.mag() > 0) {
-                steer.normalize();
-                steer.mult(this.maxSpeed);
-                steer.sub(this.vel);
-                steer.limit(this.maxForce);
-            }
-            return steer;
-        }
-
-        avoidOther(array) {
-            var dist = 20;
-            var steer = p.createVector(0, 0, 0);
-            for (var i = 0; i < array.length; i++) {
-                var d = p5.Vector.dist(this.pos, array[i].pos);
-                if (d > 0 && d < dist) {
-                    //steer.sub(this.pos, array[i].pos);
-                }
-            }
-            return steer;
-        }
-
-        align(array) {
-            var dist = 500;
-            var sum = p.createVector(0, 0);
-            var count = 0;
-            for(var i = 0; i < array.length; i++) {
-                var d = p5.Vector.dist(this.pos, array[i].pos);
-                if((d > 0) && (d < dist)) {
-                    sum.add(array[i].vel);
-                    count++;
-                }
-            }
-            if(count > 0) {
-                sum.div(count);
-                sum.normalize();
-                sum.mult(this.maxSpeed);
-                var steer = p5.Vector.sub(sum, this.vel);
-                steer.limit(this.maxForce);
-                return steer;
             } else {
-                return p.createVector(0, 0);
+                this.state = 2;
             }
         }
 
-        cohesion(array) {
-            var dist = 1000;
-            var sum = p.createVector(0, 0);
-            var count = 0;
-            for(var i = 0; i < array.length; i++) {
-                var d = p5.Vector.dist(this.pos, array[i].pos);
-                if((d > 0) && (d < dist)) {
-                    sum.add(array[i].pos);
-                    count++;
-                }
-            }
-            if(count > 0) {
-                sum.div(count);
-                return this.seek(sum);
-            } else {
-                return p.createVector(0, 0);
+        generateObjResult(_array, _index) {
+            var assignedObj = _array[_index];
+            currentObjImg = assignedObj.pic;
+            currentObjText = assignedObj.name;
+            this.playResultSound();
+        }
+
+        generateInputResult(_array, _index) {
+            var assignedInpout = _array[_index];
+            currentInputText = assignedInpout;
+            this.playResultSound();
+            if (studentIndex >= studentNames.length - 1) {
+                assignedStudents[studentIndex] = new p.AssignedPrompt(200, winHeight * 0.9, currentStudentText, currentObjText, currentObjImg, currentInputText);
+                this.saveResults();
             }
         }
 
-        avoidMouse() {
-            var mousePos = p.createVector(p.mouseX, p.mouseY);
-            var dist = p5.Vector.dist(this.pos, mousePos);
-            //var dist = p.dist(this.pos.x, this.pos.y, p.mouseX, p.mouseY);
-            if(dist < 50) {
-                var rep = p.createVector(0,0);
-                rep = p5.Vector.sub(this.pos, mousePos);
-                var scale = 1.0/dist;
-                rep.normalize();
-                rep.mult((5000 * scale));
-                this.vel = rep
+        playResultSound() {
+            resultSound[resultIndex].play();
+            resultIndex++;
+            if (resultIndex >= 2) {
+                resultIndex = 0;
             }
+        }
+
+        saveResults() {
+            var write = p.createWriter("prototypeprompt2.txt");
+            for (var i = 0; i < assignedStudents.length; i++) {
+                write.write(["\n"] + assignedStudents[i].name + [" | "] + assignedStudents[i].obj + [" | "] + assignedStudents[i].input)
+            }
+            write.close();
+        }
+    }
+
+    p.AssignedPrompt = class {
+        constructor(_x, _y, _name, _object, _image, _input) {
+            this.x = _x;
+            this.y = _y;
+            this.name = _name;
+            this.obj = _object;
+            this.img = _image;
+            this.input = _input;
         }
     }
 
