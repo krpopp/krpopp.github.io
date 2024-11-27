@@ -109,7 +109,7 @@ let sketch = function (p) {
                     changedAWas = wasObj[i].changeWord();
                 }
             } 
-            if(changedWases == 2) {
+            if(changedWases == wasObj.length) {
                 phase = 2;
                 isInput = p.createElement("textarea");
                 isInput.position(textBoxX - 150, textBoxY - 100);
