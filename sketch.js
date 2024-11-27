@@ -1,73 +1,229 @@
-let sketch=function(t){var e,l,s,i,n,o,a,$,h,r,u,d,c,b,g,m,p=[],
-    //OBJECTS; ordered by file name sequence in /allobjects
-    y=[
-        "slide",
-        "overripe tomato",
-        "dirty ashtray",
-        "packet of tulip seeds",
-        "empty box",
-        "one dozen eggs",
-        "drop of a water",
-        "bowl of plastic fruit",
-        "the brooklyn bridge",
-        "the mona lisa",
-        "the letter q",
-        "the sun",
-        "flip phone",
-        "teddy bear",
-        "one old shoe",
-        "CRT television",
-        "matzo ball soup",
-        "diamond ring",
-        "squeaky chair",
-        "broken tricycle",
-        "fax machine",
-        "heart shaped locket",
-        "lost wallet",
-        "bottle of water",
-        "unicycle",
-        "moustache",
-        "one chop stick",
-        "ikea lamp",
-        "stop light"],
-    //INPUTS
-    x=[
-        "space bar + adjacent keys",
-        "mouse movement (but no buttons)",
-        "arrow keys (but CANNOT be more movement or direction)",
-        "every letter key",
-        "no input",
-        "the mouse (but held upside down)",
-        "a single column of keys on the keyboard",
-        "SHIFT, T, WASD",
-        "two arrow keys",
-        "the mouse button (but not using the finger)",
-        "mouse scroll wheel",
-        "number keys",
-        "three nonadjacent keys",
-        "four keys (but NOT WASD or arrows)",
-        "a microphone",
-        "one button",
-        "plus/minus keys",
-        "hold down one button and do not let go",
-        "three arrow keys",
-        "a single row of keys on the keyboard"],
-    //STUDENTS
-    f=[
-        "Shiva",
-        "Qiqi",
-        "Henk",
-        "Leo",
-        "Yutong",
-        "Mushroom",
-        "Bilbo",
-        "Maryam",
-        "Mauricio",
-        "Amal",
-        "Ray",
-        "Ashley",
-        "Ethan",
-        "Jingxing",
-        "Jerry",
-        "Dale"],
-    k=[],_=0,w=0,j=0,v=[],S=0,R=5,z=null,A=!1,O=null,T=[],C=0;t.preload=function(){e=window.innerWidth,l=window.innerHeight;for(var n=0;n<y.length;n++)p[n]=t.loadImage("allobjects/object"+n+".png");s=t.loadImage("inputbtns.png"),i=t.loadImage("objbtns.png"),u=t.loadFont("Daydream.ttf"),m=t.loadSound("select_001.ogg");for(var n=0;n<2;n++)T[n]=t.loadSound("result-"+n+".ogg")},t.setup=function(){t.createCanvas(e,l);for(var d=0;d<y.length;d++)k[d]=new t.ObjObj(p[d],y[d]);t.shuffle(k,!0),t.shuffle(x,!0),n=s.get(0,0,500,200),o=s.get(0,200,500,400),a=i.get(0,0,500,200),$=i.get(0,200,500,400),g=f[j],t.textFont(u),r=new t.ButtonObj(e/4,.1*l+700,a,$,"generate object"),h=new t.ButtonObj(.75*e,.1*l+700,n,o,"generate inputs"),r.letMake=!0},t.draw=function(){t.background(175,148,255),r.update(),r.draw(),h.update(),h.draw(),t.textAlign(t.CENTER),null==d&&A?(t.rollResults(k,w),null!=z&&t.image(z,e/4-250,.1*l)):null!=d&&null==b&&A&&(t.rollResults(x,_),null!=O&&(t.fill("white"),t.text(O,h.x,.1*l+250,500,500))),null!=d&&(t.image(d,e/4-250,.1*l),t.fill("black"),t.text(c,e/4,.1*l+550)),null!=b&&(t.fill("black"),t.text(b,h.x,.1*l+250,500,500)),t.textAlign(t.CENTER),t.fill("white");for(var s=j;s<f.length;s++)f[s]===g?(t.textSize(12),t.fill("white")):(t.textSize(8),t.fill("black")),t.text(f[s],e/2-100,10+60*s,200,60);t.textSize(8),t.fill("black");for(var s=0;s<v.length;s++)t.text(v[s].name+"\n"+v[s].obj+"\n"+v[s].input,e/2-100,10+60*s,200,60);null!=d&&null!=b&&(t.textSize(24),t.fill("white"),t.text("press n to go to the next student",e/2,.9*l))},t.mouseClicked=function(){1==r.state&&(A=!0,r.letMake=!1),1==h.state&&(A=!0,h.letMake=!1)},t.keyPressed=function(){"n"==t.key&&null!=b&&(t.storeAssignments(),r.letMake=!0)},t.rollResults=function(e,l){null==d&&S<=0?(m.play(),z=e[t.int(t.random(l,e.length-1))].pic,S=R,R+=1):null!=d&&null==b&&S<=0&&(m.play(),O=e[t.int(t.random(l,e.length-1))],S=R,R+=1),S-=3,R>=40&&(null==d?(r.generateObjResult(k,w),w+=1,h.letMake=!0):null!=d&&null==b&&(h.generateInputResult(x,_),_+=1),A=!1,S=0,R=5,z=null)},t.storeAssignments=function(){v[j]=new t.AssignedPrompt(200,.9*l,g,c,d,b),j+=1,g=f[j],b=null,d=null,c=null},t.ObjObj=class{constructor(t,e){this.pic=t,this.name=e}},t.ButtonObj=class{constructor(t,e,l,s,i){this.x=t-250,this.y=e-100,this.idle=l,this.hover=s,this.state=0,this.label=i,this.letMake=!1}draw(){t.textAlign(t.CENTER),0==this.state?(t.image(this.idle,this.x,this.y),t.fill("black"),t.textSize(28),t.text(this.label,this.x+250,this.y+95),t.fill("white"),t.textSize(28),t.text(this.label,this.x+250,this.y+100)):1==this.state?(t.image(this.hover,this.x,this.y),t.fill("white"),t.textSize(28),t.text(this.label,this.x+250,this.y+95),t.fill("black"),t.textSize(28),t.text(this.label,this.x+250,this.y+100)):2==this.state&&(t.tint(43,43,43),t.image(this.idle,this.x,this.y),t.fill("black"),t.textSize(28),t.text(this.label,this.x+250,this.y+95),t.fill(145,145,145),t.textSize(28),t.text(this.label,this.x+250,this.y+100),t.tint("white"))}update(){this.letMake?t.mouseX>this.x&&t.mouseX<this.x+500&&t.mouseY>this.y&&t.mouseY<this.y+200?this.state=1:this.state=0:this.state=2}generateObjResult(t,e){var l=t[e];d=l.pic,c=l.name,this.playResultSound()}generateInputResult(e,s){b=e[s],this.playResultSound(),j>=f.length-1&&(v[j]=new t.AssignedPrompt(200,.9*l,g,c,d,b),this.saveResults())}playResultSound(){T[C].play(),++C>=2&&(C=0)}saveResults(){for(var e=t.createWriter("prototypeprompt2.txt"),l=0;l<v.length;l++)e.write(["\n"]+v[l].name+[" | "]+v[l].obj+[" | "]+v[l].input);e.close()}},t.AssignedPrompt=class{constructor(t,e,l,s,i,n){this.x=t,this.y=e,this.name=l,this.obj=s,this.img=i,this.input=n}}};
+let sketch = function (p) {
+
+    var winWidth;
+    var winHeight;
+
+    var wasArr = "";
+    var was = "was ";
+
+    var wasTime = 0;
+    var wasTimeReset = 0;
+    
+    var phase = 0;
+
+    var textBoxX = 0;
+    var textBoxY = 0;
+
+    var wasInput;
+    var wasButton;
+
+    var wasSubmission = "";
+
+    var wasObj = [];
+
+    var wasWid;
+
+    var changedWases = 0;
+    var changedAWas = false;
+
+    var isInput;
+    var isButton;
+
+    var isSubmission = "";
+
+    var willBeInput;
+    var willBeButton;
+
+    var willBeSubmission = "";
+
+    var changedIses = 0;
+    var changedAnIs = false;
+
+    p.preload = function () {
+        winWidth = window.innerWidth;
+        winHeight = window.innerHeight;
+    }
+
+    p.setup = function () {
+        p.createCanvas(winWidth, winHeight);
+        p.textSize(22);
+        p.textWrap(p.CHAR);
+        p.textFont('Times New Roman');
+        p.textLeading(20);
+        wasWid = p.textWidth('was ');
+        var wasLine = "";
+        for(var i = 0; i < winWidth; i += wasWid) {
+            wasLine = wasLine.concat(was);
+        }
+        for(var i = 0; i < winHeight; i += 100) {
+            wasArr = wasArr.concat(wasLine);
+        }
+
+        var wCount = 0;
+        for(var y = 0; y < p.height; y += 20) {
+            for(var x = 0; x < p.width - wasWid; x += wasWid) {
+                wasObj[wCount] = new p.Word(x, y + 20, wCount);
+                wCount+=1;
+            }
+        }
+
+        textBoxX = p.width/2;
+        textBoxY = p.height/2;
+
+        wasInput = p.createElement("textarea");
+        wasInput.position(textBoxX - 150, textBoxY - 100);
+        wasInput.size(300, 200);
+
+        wasButton = p.createButton("... is who I think I was");
+        wasButton.position(textBoxX - 70, textBoxY + 120);
+        wasButton.mousePressed(p.saveWas);
+
+       
+
+        p.background(255);
+        p.rectMode(p.CORNER);
+        p.fill('black');
+        for(var i = 0; i < wasObj.length; i++) {
+            wasObj[i].drawWord();
+        }
+        // p.text(wasArr,0,0, p.width);
+        if(phase == 0) {
+            p.rectMode(p.CENTER);
+            p.fill(255);
+            p.rect(textBoxX, textBoxY, 500, 300);
+            p.fill(0);
+            p.text("who were you?", textBoxX - p.textWidth("who were you?")/2, textBoxY - 110);
+        }
+    }
+
+    
+    p.draw = function () {
+        if(phase == 1) {
+            p.background(255);
+            p.rectMode(p.CORNER);
+            p.fill('black');
+            for(var i = 0; i < wasObj.length; i++) {
+                wasObj[i].drawWord();
+                wasObj[i].colCheck();
+                if(changedWases >= 20 && !changedAWas) {
+                    changedAWas = wasObj[i].changeWord();
+                }
+            } 
+            if(changedWases == 2) {
+                phase = 2;
+                isInput = p.createElement("textarea");
+                isInput.position(textBoxX - 150, textBoxY - 100);
+                isInput.size(300, 200);
+        
+                isButton = p.createButton("... is who I am");
+                isButton.position(textBoxX - 70, textBoxY + 120);
+                isButton.mousePressed(p.saveIs);
+                p.rectMode(p.CENTER);
+                p.fill(255);
+                p.rect(textBoxX, textBoxY, 500, 300);
+                p.fill(0);
+                p.text("who are you?", textBoxX - p.textWidth("who are you?")/2, textBoxY - 110);
+            }
+            changedAWas = false;
+        } else if(phase == 2) {
+        } else if(phase == 3) {
+            p.background(255);
+            p.rectMode(p.CORNER);
+            p.fill('black');
+            willBeInput = p.createElement("textarea");
+            willBeInput.position(textBoxX - 150, textBoxY - 100);
+            willBeInput.size(300, 200);
+            
+            willBeButton = p.createButton("... is who I will be");
+            willBeButton.position(textBoxX - 70, textBoxY + 120);
+            willBeButton.mousePressed(p.saveWillBe);
+            p.rectMode(p.CENTER);
+            p.fill(255);
+            p.rect(textBoxX, textBoxY, 500, 300);
+            p.fill(0);
+            p.text("who will you be?", textBoxX - p.textWidth("who will you be?")/2, textBoxY - 110);
+            phase = 4;
+        } else if(phase == 5){
+            p.background(0);
+        }
+        
+        console.log(phase);
+    }
+
+    p.addWas = function () {
+        wasArr = wasArr.concat(was);
+    }
+
+    p.saveWas = function(){
+        wasSubmission = wasInput.value();
+        p.removeVerb();
+    }
+
+    p.saveIs = function(){
+        isSubmission = isInput.value();
+        p.removeVerb();
+    }
+
+    p.saveWillBe = function(){
+        willBeSubmission = willBeInput.value();
+        p.removeVerb();
+        p.makeTextFile();
+    }
+
+    p.removeVerb = function() {
+        p.removeElements();
+        phase += 1;
+    }
+
+    p.makeTextFile = function() {
+        w = window.open();
+        w.document.write("<div align='center'><h1>Prompt #8</h1>" + "<br><br><br>");
+        w.document.write("<div style='break-after:page'> </div>");
+        w.document.write("<div align='center'><h1>Theme: Is/Was/Will Be</h1>" + "<br><br><br>");
+        w.document.write("You were:" + "<br>" + wasSubmission + "<br><br><br>");
+        w.document.write("You are:" + "<br>" +isSubmission + "<br><br><br>");
+        w.document.write("You will be:" + "<br>" +willBeSubmission + "<br><br><br></div>");
+        w.print();
+    }
+
+    p.Word = class {
+        constructor(_x, _y, _i) {
+            this.x = _x;
+            this.y = _y;
+            this.word = "was";
+            this.index = _i;
+            this.state = 0;
+        }
+
+        drawWord(){
+            if(this.index == wasObj.length - 1) {
+                p.fill("red");
+                p.rect(this.x - wasWid + 7, this.y - 10, wasWid - 7, 10);
+            }
+            p.textAlign(p.RIGHT);
+            p.fill('black');
+            p.text(this.word, this.x, this.y);
+        }
+
+        colCheck() {
+            if(p.mouseX > this.x - 20 && p.mouseX < this.x && 
+                p.mouseY > this.y - 7 && p.mouseY < this.y + 17
+            ) {
+                this.changeWord();
+            }
+        }
+
+        changeWord() {
+            if(this.state == 0){
+                this.word = "is";
+                this.state = 1;
+                changedWases += 1;
+                return true;
+            } {
+                return false;
+            }
+        }
+        
+    }
+
+}
